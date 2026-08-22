@@ -1076,51 +1076,51 @@ WHERE qp.name = 'Anime 1080p FR' AND t.name = 'Sonarr';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '1080p Balanced FR' AND l.name = 'Any';
+WHERE qp.name = '1080p Balanced FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '1080p Compact FR' AND l.name = 'Any';
+WHERE qp.name = '1080p Compact FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '1080p Efficient FR' AND l.name = 'Any';
+WHERE qp.name = '1080p Efficient FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '1080p Quality FR' AND l.name = 'Any';
+WHERE qp.name = '1080p Quality FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '1080p Quality HDR FR' AND l.name = 'Any';
+WHERE qp.name = '1080p Quality HDR FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '1080p Remux FR' AND l.name = 'Any';
+WHERE qp.name = '1080p Remux FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '2160p Balanced FR' AND l.name = 'Any';
+WHERE qp.name = '2160p Balanced FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '2160p Efficient FR' AND l.name = 'Any';
+WHERE qp.name = '2160p Efficient FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '2160p Quality FR' AND l.name = 'Any';
+WHERE qp.name = '2160p Quality FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '2160p Remux FR' AND l.name = 'Any';
+WHERE qp.name = '2160p Remux FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = '720p Quality FR' AND l.name = 'Any';
+WHERE qp.name = '720p Quality FR' AND l.name = 'French';
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT qp.name, l.name, 'simple'
 FROM quality_profiles qp, languages l
-WHERE qp.name = 'Anime 1080p FR' AND l.name = 'Any';
+WHERE qp.name = 'Anime 1080p FR' AND l.name = 'French';
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score)
 SELECT qp.name, cf.name, 'all', 100000
 FROM quality_profiles qp, custom_formats cf
