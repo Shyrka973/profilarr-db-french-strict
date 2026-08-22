@@ -18,9 +18,9 @@
     }
   ],
   "license": "MIT",
-  "repository": "https://gitlab.shirka.org/claude/profilarr-db-french-strict",
+  "repository": "https://github.com/Shyrka973/profilarr-db-french-strict",
   "links": {
-    "homepage": "https://gitlab.shirka.org/claude/profilarr-db-french-strict",
+    "homepage": "https://github.com/Shyrka973/profilarr-db-french-strict",
     "upstream": "https://github.com/Jojont54/Profilarr-database-french-regex"
   },
   "profilarr": {
