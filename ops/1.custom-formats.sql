@@ -7655,13 +7655,3 @@ INSERT INTO condition_sources (custom_format_name, condition_name, source) VALUE
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required) VALUES ('1080p Bluray (Efficient)', 'x264', 'release_title', 'all', 0, 1);
 INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name) VALUES ('1080p Bluray (Efficient)', 'x264', 'AVC');
 INSERT INTO custom_format_tags (custom_format_name, tag_name) SELECT cf.name, t.name FROM custom_formats cf, tags t WHERE cf.name = '1080p Bluray (Efficient)' AND t.name = 'Source';
-
--- [fork shirka.org] Garde-fou strict francais.
--- 'French Missing' porte SIX conditions required : un simple marqueur 'VOSTFR'/'MULTi' dans le
--- titre suffit a le desarmer, meme quand la langue resolue est Unknown. Ce CF-ci n'a QU'UNE
--- condition : la langue resolue par l'*arr. Aucune porte de sortie textuelle.
-INSERT INTO custom_formats (name, description) VALUES ('Not French (strict)', 'Rejette tout release dont la langue resolue n''est pas le francais. Condition unique (langue), sans dependance au titre.');
-INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required)
-VALUES ('Not French (strict)', 'Not French', 'language', 'all', 1, 1);
-INSERT INTO condition_languages (custom_format_name, condition_name, language_name, except_language)
-VALUES ('Not French (strict)', 'Not French', 'French', 0);

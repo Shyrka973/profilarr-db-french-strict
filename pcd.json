@@ -1,6 +1,6 @@
 {
   "name": "Profilarr Database French Regex (strict FR)",
-  "version": "2.0.4+shirka.2",
+  "version": "2.0.4+shirka.3",
   "description": "FORK homelab shirka.org de Jojont54/Profilarr-database-french-regex. Seule difference : les profils FR imposent language='French' au lieu de 'Any'. L'upstream exprime la preference francaise uniquement par des scores de custom formats (preferentiel) ; ce fork ajoute un filtre de langue dur (strict). 'Anime 1080p VOSTFR FR' reste en 'Any' (VO sous-titree par nature). Upstream: Custom formats, regex patterns, and quality profiles tuned for the French-speaking *arr ecosystem. Sources: TRaSH Guides + Dictionarry base + leof28/p",
   "arr_types": [
     "radarr",
