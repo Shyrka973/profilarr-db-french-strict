@@ -35,11 +35,21 @@
 -- reste porte par 'FR LQ' (-999999), qui vise la qualite reelle et n'est pas touche ici.
 --
 -- Perimetre volontairement limite aux DEUX profils Quality DEPLOYES ET MESURES :
---   '1080p Quality HDR FR' : 181 fichiers concernes sur 1378
+--   '1080p Quality HDR FR' : 181 fichiers concernes sur 1378 (Radarr)
 --   '1080p Quality FR'     : 2 fichiers concernes sur 32 -- et ce sont ses 2 SEULS negatifs
--- '720p Quality FR' n'est pas deploye dans notre Radarr, il n'a donc pas ete mesure et
--- n'est pas modifie. Elargir sans mesure est exactement l'erreur de la bascule refutee
--- ci-dessus.
+--
+-- SONARR EST AUSSI CONCERNE (arr_type='all'), et il a ete mesure separement le 2026-08-30
+-- avant application -- 3265 fichiers d'episodes sur les 176 series de '1080p Quality HDR FR' :
+--   negatifs = 293 (9,0 %) ; sous le seuil = 382 (11,7 %) ; median = 730600
+--   MAIS seulement 15 negatifs portent 'HDLight' (0,5 % des fichiers)
+-- L'effet de cette op sur Sonarr est donc MARGINAL et ne peut qu'ameliorer : elle retire un
+-- malus, elle n'en ajoute aucun. Les 278 autres negatifs de Sonarr relevent de 'FR LQ',
+-- 'AV1', 'Remux', 'French VFQ' -- non touches ici, et non instruits a ce stade.
+--
+-- '720p Quality FR' n'est PAS modifie. ⚠️ Attention a la formulation : il n'est pas deploye
+-- dans RADARR, mais il EXISTE dans SONARR (2 series, HDLight a -999999). Il est exclu parce
+-- qu'il n'a pas ete mesure, pas parce qu'il serait absent du parc. Elargir sans mesure est
+-- exactement l'erreur de la bascule refutee ci-dessus.
 --
 -- Effet attendu, calcule sur la mesure : 167 fichiers repassent positifs, soit 378 -> ~211
 -- fichiers sous le seuil (27,4 % -> 15,3 %) -- mieux que les DEUX profils existants.
