@@ -12,8 +12,8 @@
 
 INSERT INTO regular_expressions (name, pattern, description)
 SELECT 'French MULTi Explicit Marker (INTL)',
-       '(?i)(?<=^|[\s.-])MULTI[ ._-]+(?:FR|FRA|FRENCH|FRANCAIS|FRANÇAIS|TRUE[ ._-]?FR(?:ENCH)?|VFQ2?|VF|VFI|VFF2?|VFB|VOF|VOQ|VF2|VFI2)(?=$|[\s.-])',
-       'Matches INTL MULTi releases only when MULTi is followed by an explicit French marker such as FR, FRENCH, TRUEFRENCH, VF, VFF, VFI, VFQ, VOF or VOQ.'
+       '(?i)(?<=^|[\s._-])MULTI(?:[\s._,+&/-]+(?:WITH|AUDIO(?:S)?|LANG(?:UAGE)?S?|DUAL|ORIG(?:INAL)?|PLUS|(?!(?:SUB)(?=$|[\s._,+&/-]))[A-Z]{2,3})){0,6}[\s._,+&/-]+(?:FR|FRA|FRENCH|FRANCAIS|FRANÇAIS|TRUE[\s._-]?FR(?:ENCH)?|VFQ2?|VF|VFI|VFF2?|VFB|VOF|VOQ|VF2|VFI2)(?![\s._,+&/-]+SUB(?:S|TITLE|TITLES)?\b)(?=$|[\s._,+&/-])',
+       'Matches INTL MULTi releases when an explicit French marker follows directly or after up to six intermediary language codes or words, such as MULTI.EN.ES.VFF, MULTI.VO.VFF or MULTI.WITH.TRUEFRENCH.'
 WHERE NOT EXISTS (
     SELECT 1 FROM regular_expressions
     WHERE name = 'French MULTi Explicit Marker (INTL)'
@@ -153,7 +153,7 @@ WHERE NOT EXISTS (
 
 INSERT INTO custom_formats (name, description)
 SELECT 'French MULTi + Marker FR (INTL)',
-       'Matches INTL MULTi releases only when MULTi is followed by an explicit French marker. Useful on international trackers where MULTi alone does not guarantee French audio.'
+       'Matches INTL MULTi releases when the title carries an explicit French marker before download or MediaInfo confirms [AUDIO][FR+--] after analysis.'
 WHERE NOT EXISTS (
     SELECT 1 FROM custom_formats
     WHERE name = 'French MULTi + Marker FR (INTL)'
@@ -177,27 +177,44 @@ WHERE NOT EXISTS (
 
 INSERT INTO custom_formats (name, description)
 SELECT 'French Missing (INTL)',
-       'Matches INTL releases without detected French audio or a trusted French MULTi/MultiSub marker, French release group, VF, VOSTFR, VFQ or French original marker.'
+       'Rejects INTL releases without reliable French evidence in the title before download or in the MediaInfo AUDIO/SUB markers after analysis.'
 WHERE NOT EXISTS (
     SELECT 1 FROM custom_formats
     WHERE name = 'French Missing (INTL)'
 );
 
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required)
-SELECT 'French Missing (INTL)', 'Not French', 'language', 'all', 1, 1
+SELECT 'French Missing (INTL)', 'French Except', 'language', 'all', 0, 0
 WHERE NOT EXISTS (
     SELECT 1 FROM custom_format_conditions
     WHERE custom_format_name = 'French Missing (INTL)'
-      AND name = 'Not French'
+      AND name = 'French Except'
 );
 
 INSERT INTO condition_languages (custom_format_name, condition_name, language_name, except_language)
-SELECT 'French Missing (INTL)', 'Not French', 'French', 0
+SELECT 'French Missing (INTL)', 'French Except', 'French', 1
 WHERE NOT EXISTS (
     SELECT 1 FROM condition_languages
     WHERE custom_format_name = 'French Missing (INTL)'
-      AND condition_name = 'Not French'
+      AND condition_name = 'French Except'
       AND language_name = 'French'
+);
+
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required)
+SELECT 'French Missing (INTL)', 'Original Except', 'language', 'all', 0, 0
+WHERE NOT EXISTS (
+    SELECT 1 FROM custom_format_conditions
+    WHERE custom_format_name = 'French Missing (INTL)'
+      AND name = 'Original Except'
+);
+
+INSERT INTO condition_languages (custom_format_name, condition_name, language_name, except_language)
+SELECT 'French Missing (INTL)', 'Original Except', 'Original', 1
+WHERE NOT EXISTS (
+    SELECT 1 FROM condition_languages
+    WHERE custom_format_name = 'French Missing (INTL)'
+      AND condition_name = 'Original Except'
+      AND language_name = 'Original'
 );
 
 INSERT INTO custom_format_tags (custom_format_name, tag_name)
@@ -324,7 +341,7 @@ WHERE EXISTS (
   );
 
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required)
-SELECT 'French MULTi + Marker FR (INTL)', 'French MULTi Explicit Marker (INTL)', 'release_title', 'all', 0, 1
+SELECT 'French MULTi + Marker FR (INTL)', 'French MULTi Explicit Marker (INTL)', 'release_title', 'all', 0, 0
 WHERE NOT EXISTS (
     SELECT 1 FROM custom_format_conditions
     WHERE custom_format_name = 'French MULTi + Marker FR (INTL)'
@@ -338,6 +355,22 @@ WHERE NOT EXISTS (
     WHERE custom_format_name = 'French MULTi + Marker FR (INTL)'
       AND condition_name = 'French MULTi Explicit Marker (INTL)'
       AND regular_expression_name = 'French MULTi Explicit Marker (INTL)'
+);
+
+INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required)
+SELECT 'French MULTi + Marker FR (INTL)', 'Renamed French MULTi', 'release_title', 'all', 0, 0
+WHERE NOT EXISTS (
+    SELECT 1 FROM custom_format_conditions
+    WHERE custom_format_name = 'French MULTi + Marker FR (INTL)'
+      AND name = 'Renamed French MULTi'
+);
+
+INSERT INTO condition_patterns (custom_format_name, condition_name, regular_expression_name)
+SELECT 'French MULTi + Marker FR (INTL)', 'Renamed French MULTi', 'Renamed French MULTi'
+WHERE NOT EXISTS (
+    SELECT 1 FROM condition_patterns
+    WHERE custom_format_name = 'French MULTi + Marker FR (INTL)'
+      AND condition_name = 'Renamed French MULTi'
 );
 
 INSERT INTO custom_format_conditions (custom_format_name, name, type, arr_type, negate, required)
@@ -422,6 +455,9 @@ FROM (
     UNION ALL SELECT 'Not French VOSTFR'
     UNION ALL SELECT 'Not French VFQ'
     UNION ALL SELECT 'Not French Original Marker'
+    UNION ALL SELECT 'Not Renamed French MULTi'
+    UNION ALL SELECT 'Not Renamed French VF'
+    UNION ALL SELECT 'Not Renamed French Subs'
 ) wanted
 WHERE NOT EXISTS (
     SELECT 1 FROM custom_format_conditions cfc
@@ -438,6 +474,9 @@ FROM (
     UNION ALL SELECT 'Not French VOSTFR', 'French VOSTFR'
     UNION ALL SELECT 'Not French VFQ', 'French VFQ'
     UNION ALL SELECT 'Not French Original Marker', 'French Original Marker'
+    UNION ALL SELECT 'Not Renamed French MULTi', 'Renamed French MULTi'
+    UNION ALL SELECT 'Not Renamed French VF', 'Renamed French VF'
+    UNION ALL SELECT 'Not Renamed French Subs', 'Renamed French Subs'
 ) wanted
 WHERE NOT EXISTS (
     SELECT 1 FROM condition_patterns cp
