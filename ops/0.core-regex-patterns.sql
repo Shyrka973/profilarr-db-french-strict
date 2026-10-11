@@ -102,6 +102,7 @@ INSERT INTO regular_expressions (name, pattern, description) VALUES ('Atmos (Mis
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('AV1', '\bAV1\b', 'AV1, or AOMedia Video 1, is a video coding format that compresses video files and streams while maintaining high quality.');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('AVC', '[xh][ ._-]?264|\bAVC(\b|\d)', 'An open source encoder that produces AVC videos. ');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('AViTECH', '(?<=^|[\s.-])AViTECH\b', 'Matches "AViTECH" when preceded by whitespace, a hyphen or dot');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('AvALoN', '(?<=^|[\s.-])AvALoN\b', 'Matches "AvALoN" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('AVON', '(?<=^|[\s.-])AVON\b', 'Matches "AVON" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('AW', '(?<=^|[\s.-])AW\b', 'Matches "AW" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('AYMO', '(?<=^|[\s.-])AYMO\b', 'Matches "AYMO" when preceded by whitespace, a hyphen or dot');
@@ -225,14 +226,11 @@ INSERT INTO regular_expressions (name, pattern, description) VALUES ('FoX', '(?<
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('FRATERNiTY', '(?<=^|[\s.-])FRATERNiTY\b', 'Matches "FRATERNiTY" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('FREAMON', '(?<=^|[\s.-])FREAMON\b', 'Matches "FREAMON" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('FReeZeR', '(?<=^|[\s.-])FReeZeR\b', 'Matches "FReeZeR" when preceded by whitespace, a hyphen or dot');
-INSERT INTO regular_expressions (name, pattern, description) VALUES ('French MULTi', '(?i)(?<=^|[\s._-])(?:MULTI(?:(?:[\s._,+&/-]?(?:FR|FRA|FRENCH|FRANCAIS|FRANÇAIS|TRUE[\s._-]?FR(?:ENCH)?|VFQ2?|VF|VFI|VFF2?|VFB|VOF|VOQ|VF2|VFI2|\d+))|(?:[\s._,+&/-]+(?:WITH|AUDIO(?:S)?|LANG(?:UAGE)?S?|DUAL|ORIG(?:INAL)?|PLUS|(?!(?:SUB)(?=$|[\s._,+&/-]))[A-Z]{2,3})){1,6}[\s._,+&/-]+(?:FR|FRA|FRENCH|FRANCAIS|FRANÇAIS|TRUE[\s._-]?FR(?:ENCH)?|VFQ2?|VF|VFI|VFF2?|VFB|VOF|VOQ|VF2|VFI2|\d+))?|FR\s*\+\s*[A-Z]{2}|[A-Z]{2}\s*\+\s*FR)(?![\s._,+&/-]?SUBS?)(?=$|[\s._,+&/-])', 'Matches French scene-style MULTi releases, including compact variants and explicit French markers after intermediary language codes or words such as MULTI.EN.ES.VFF, MULTI.VO.VFF and MULTI.WITH.TRUEFRENCH, plus FR+XX language-pair tags.');
-INSERT INTO regular_expressions (name, pattern, description) VALUES ('French VF', '(?i)(?<=^|[\s.-])(?:VF(?!Q)|VFI|VFF2?|VF2|TRUE[ ._-]?FR(?:ENCH)?|FRENCH(?![ ._-]?(?:SUBS?|CANADIAN))|FRANCAIS|FRANÇAIS|FRA)(?=$|[\s.-])', 'Matches French dubbed releases while keeping subtitles, MULTi, and Quebec French variants separate.');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('French MULTi', '(?i)(?:(?<=^|[\s._-])(?:MULTI(?:(?:[\s._,+&/-]?(?:FR|FRA|FRE|FRENCH|FRANCAIS|FRANÇAIS|TRUE[\s._-]?FR(?:ENCH)?|VFQ2?|VF|VFI|VFF2?|VFB|VOF|VOQ|VF2|VFI2|\d+))|(?:[\s._,+&/-]+(?:WITH|AUDIO(?:S)?|LANG(?:UAGE)?S?|DUAL|ORIG(?:INAL)?|PLUS|(?!(?:SUB)(?=$|[\s._,+&/-]))[A-Z]{2,3})){1,6}[\s._,+&/-]+(?:FR|FRA|FRE|FRENCH|FRANCAIS|FRANÇAIS|TRUE[\s._-]?FR(?:ENCH)?|VFQ2?|VF|VFI|VFF2?|VFB|VOF|VOQ|VF2|VFI2|\d+))?|FR\s*\+\s*[A-Z]{2}|[A-Z]{2}\s*\+\s*FR)(?![\s._,+&/-]?SUBS?)(?=$|[\s._,+&/-])|(?<!\()\[(?=[^\]]*\bFR\b)(?=[^\]]*\+)[A-Z]{2,3}(?:\+[A-Z]{2,3})+\](?!\)))', 'Matches French scene-style MULTi releases and renamed MediaInfo audio blocks such as [FR+EN] or [EN+FR] when they are not subtitle blocks, including compact variants, intermediary language codes and FR+XX language-pair tags.');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('French VF', '(?i)(?:(?<=^|[\s.-])(?:VF(?!Q)|VFI|VFF2?|VF2|TRUE[ ._-]?FR(?:ENCH)?|FRENCH(?![ ._-]?(?:SUBS?|CANADIAN))|FRANCAIS|FRANÇAIS|FR|FRE|FRA)(?=$|[\s.-])|(?<!\()\[FR\](?!\)))', 'Matches French dubbed markers, standalone FR, FRE or FRA markers bounded by a dot, hyphen, whitespace or title boundary, and the renamed MediaInfo audio block [FR] when it is not a subtitle block, while keeping MULTi and Quebec French variants separate.');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('French Original Marker', '(?i)(?<=^|[\s.-])(?:VOF|VOQ)(?=$|[\s.-])', 'Matches French original-version markers VOF and VOQ.');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('French VFQ', '(?i)(?<=^|[\s.-])(?:VFQ2?|VQ|(?:MULTI|FRENCH)[ ._-]+CA|FRENCH[ ._-]?CANADIAN|CANADIAN[ ._-]?FRENCH|QUEBECOIS)(?=$|[\s.-])', 'Matches Quebec or Canadian French markers that should be rejected by French profiles, including MULTi.CA and FRENCH.CA.');
-INSERT INTO regular_expressions (name, pattern, description) VALUES ('French VOSTFR', '(?i)(?<=^|[\s.-])(?:VOST(?:[ ._-]?FR)?|SUB[ ._-]?(?:FR|FRENCH)|FRENCH[ ._-]?SUBS?|FR[ ._-]?SUBS?)(?=$|[\s.-])', 'Matches original-audio releases with French subtitles.');
-INSERT INTO regular_expressions (name, pattern, description) VALUES ('Renamed French MULTi', '(?i)\[AUDIO\]\[FR\+-{1,2}\]', 'Matches the normalized MediaInfo marker [AUDIO][FR+--], meaning French audio plus at least one other detected language.');
-INSERT INTO regular_expressions (name, pattern, description) VALUES ('Renamed French VF', '(?i)\[AUDIO\]\[FR\]', 'Matches the normalized MediaInfo marker [AUDIO][FR], meaning French is the only detected audio language.');
-INSERT INTO regular_expressions (name, pattern, description) VALUES ('Renamed French Subs', '(?i)\[SUB\]\[FR(?:\+-{1,2})?\]', 'Matches normalized MediaInfo subtitle markers [SUB][FR] and [SUB][FR+--], meaning French subtitles are present.');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('French VOSTFR', '(?i)(?:(?<=^|[\s.-])(?:VOST(?:[ ._-]?FR)?|SUB[ ._-]?(?:FR|FRENCH)|FRENCH[ ._-]?SUBS?|FR[ ._-]?SUBS?)(?=$|[\s.-])|\(\[(?=[^\]]*\bFR\b)[A-Z]{2,3}(?:\+[A-Z]{2,3})*\]\))', 'Matches original-audio releases with French subtitles and renamed MediaInfo subtitle blocks such as ([FR]) or ([EN+FR]).');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('FRENCHDEADPOOL2', '(?<=^|[\s.-])FRENCHDEADPOOL2\b', 'Matches "FRENCHDEADPOOL2" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('FrIeNdS', '(?<=^|[\s.-])FrIeNdS\b', 'Matches "FrIeNdS" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('FRiES', '(?<=^|[\s.-])FRiES\b', 'Matches "FRiES" when preceded by whitespace, a hyphen or dot');
@@ -257,6 +255,7 @@ INSERT INTO regular_expressions (name, pattern, description) VALUES ('GHZ', '(?<
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('GiMBAP', '(?<=^|[\s.-])GiMBAP\b', 'Matches "GiMBAP" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('GKS', '(?<=^|[\s.-])GKS\b', 'Matches "GKS" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('GLaDOS', '(?<=^|[\s.-])GLaDOS\b', 'Matches "GLaDOS" when preceded by whitespace, a hyphen or dot');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('GL0P', '(?<=^|[\s.-])GL0P\b', 'Matches "GL0P" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('GLiMMER', '(?<=^|[\s.-])GLiMMER\b', 'Matches "GLiMMER" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('Goatlove', '(?<=^|[\s.-])Goatlove\b', 'Matches "Goatlove" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('GOBO2S', '(?<=^|[\s.-])GOBO2S\b', 'Matches "GOBO2S" when preceded by whitespace, a hyphen or dot');
@@ -435,7 +434,7 @@ INSERT INTO regular_expressions (name, pattern, description) VALUES ('PiCKLES', 
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('PIKACHU', '(?<=^|[\s.-])PIKACHU\b', 'Matches "PIKACHU" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('Pikari Teshima', '(?<=^|[\s.-])Pikari[ .-]?Teshima\b', 'Matches "Pikari Teshima" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('PiNKPANTERS', '(?<=^|[\s.-])PiNKPANTERS\b', 'Matches "PiNKPANTERS" when preceded by whitespace, a hyphen or dot');
-INSERT INTO regular_expressions (name, pattern, description) VALUES ('PiXEL', '(?<=^|[\s.-])PiXEL\b', 'Matches "PiXEL" when preceded by whitespace, a hyphen or dot');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('PiXEL', '(?i)(?<=^|[\s.-])PiXEL\b', 'Matches "PiXeL Industry" through its "PiXeL" release tag');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('PKPTRS', '(?<=^|[\s.-])PKPTRS\b', 'Matches "PKPTRS" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('PopHD', '(?<=^|[\s.-])PopHD\b', 'Matches "PopHD" when preceded by whitespace, a hyphen or dot');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('POTO', '(?<=^|[\s.-])POTO\b', 'Matches "POTO" when preceded by whitespace, a hyphen or dot');
@@ -943,6 +942,14 @@ INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
 SELECT re.name, t.name
 FROM regular_expressions re, tags t
 WHERE re.name = 'AViTECH' AND t.name = 'Release Group';
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
+SELECT re.name, t.name
+FROM regular_expressions re, tags t
+WHERE re.name = 'AvALoN' AND t.name = 'French';
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
+SELECT re.name, t.name
+FROM regular_expressions re, tags t
+WHERE re.name = 'AvALoN' AND t.name = 'Release Group';
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
 SELECT re.name, t.name
 FROM regular_expressions re, tags t
@@ -2094,30 +2101,6 @@ WHERE re.name = 'French VOSTFR' AND t.name = 'Language';
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
 SELECT re.name, t.name
 FROM regular_expressions re, tags t
-WHERE re.name = 'Renamed French MULTi' AND t.name = 'French';
-INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
-SELECT re.name, t.name
-FROM regular_expressions re, tags t
-WHERE re.name = 'Renamed French MULTi' AND t.name = 'Language';
-INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
-SELECT re.name, t.name
-FROM regular_expressions re, tags t
-WHERE re.name = 'Renamed French VF' AND t.name = 'French';
-INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
-SELECT re.name, t.name
-FROM regular_expressions re, tags t
-WHERE re.name = 'Renamed French VF' AND t.name = 'Language';
-INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
-SELECT re.name, t.name
-FROM regular_expressions re, tags t
-WHERE re.name = 'Renamed French Subs' AND t.name = 'French';
-INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
-SELECT re.name, t.name
-FROM regular_expressions re, tags t
-WHERE re.name = 'Renamed French Subs' AND t.name = 'Language';
-INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
-SELECT re.name, t.name
-FROM regular_expressions re, tags t
 WHERE re.name = 'FRENCHDEADPOOL2' AND t.name = 'French';
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
 SELECT re.name, t.name
@@ -2367,6 +2350,14 @@ INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
 SELECT re.name, t.name
 FROM regular_expressions re, tags t
 WHERE re.name = 'GLaDOS' AND t.name = 'Release Group';
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
+SELECT re.name, t.name
+FROM regular_expressions re, tags t
+WHERE re.name = 'GL0P' AND t.name = 'French';
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
+SELECT re.name, t.name
+FROM regular_expressions re, tags t
+WHERE re.name = 'GL0P' AND t.name = 'Release Group';
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
 SELECT re.name, t.name
 FROM regular_expressions re, tags t
@@ -5844,3 +5835,42 @@ INSERT INTO regular_expression_tags (regular_expression_name, tag_name) SELECT r
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('Nordic', '\b(Nordic)\b', 'Matches releases explicitly marked Nordic.');
 INSERT INTO regular_expressions (name, pattern, description) VALUES ('Dual Audio', '\bDual[ ._-]?(Audio)?\b|\b(JA|ZH|KO)(?= ?\+ ?.*?\b(EN))|\b(EN)(?= ?\+ ?.*?\b(JA|ZH|KO))\b', 'Matches explicitly tagged dual-audio releases and common Asian language plus English pairs.');
 INSERT INTO regular_expression_tags (regular_expression_name, tag_name) SELECT re.name, t.name FROM regular_expressions re, tags t WHERE re.name IN ('Nordic', 'Dual Audio') AND t.name = 'Language';
+
+-- Additional French release groups. The regex name follows the release tag;
+-- descriptions retain the full team name when it differs from that tag.
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('addicted2u', '(?i)(?<=^|[\s.-])addicted2u\b', 'Matches the "addicted2u" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('AgoraQc', '(?i)(?<=^|[\s.-])AgoraQc\b', 'Matches the "AgoraQc" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('AKS', '(?i)(?<=^|[\s.-])AKS\b', 'Matches "Anarchy Knows Silence" through its "AKS" release tag');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('Anime-DL', '(?i)(?<=^|[\s.-])Anime[ ._-]?DL\b', 'Matches the "Anime-DL" release group and common separator variants');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('AnimesForAll', '(?i)(?<=^|[\s.-])AnimesForAll\b', 'Matches the "AnimesForAll" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('ANTHEM', '(?i)(?<=^|[\s.-])ANTHEM\b', 'Matches the "Anthem" release group through its "ANTHEM" release tag');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('Blap', '(?i)(?<=^|[\s.-])Blap\b', 'Matches the "Blap" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('CaptQC', '(?i)(?<=^|[\s.-])CaptQC\b', 'Matches "TEAM CaptQC" through its "CaptQC" release tag');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('DELiRiUS', '(?i)(?<=^|[\s.-])DELiRiUS\b', 'Matches the "DELiRiUS" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('EICHBAUM MUSIC', '(?i)(?<=^|[\s.-])EICHBAUM[ ._-]+MUSIC\b', 'Matches the "EICHBAUM MUSIC" release group and common separator variants');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('H4KIG', '(?i)(?<=^|[\s.-])H4KIG\b', 'Matches the "H4KIG" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('HazzAnim', '(?i)(?<=^|[\s.-])HazzAnim\b', 'Matches the "HazzAnim" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('KTH', '(?i)(?<=^|[\s.-])KTH\b', 'Matches the "KTH" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('LPP', '(?i)(?<=^|[\s.-])LPP\b', 'Matches the "LPP" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('MiniPousses', '(?i)(?<=^|[\s.-])MiniPousses\b', 'Matches "Les MiniPousses" through its "MiniPousses" release tag');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('MiTOU', '(?i)(?<=^|[\s.-])MiTOU\b', 'Matches the "MiTOU" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('NODA', '(?i)(?<=^|[\s.-])NODA\b', 'Matches the "NODA" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('NYX', '(?i)(?<=^|[\s.-])NYX\b', 'Matches the "NYX" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('RAPTOR', '(?i)(?<=^|[\s.-])RAPTOR\b', 'Matches the "RAPTOR" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('REBiRTH', '(?i)(?<=^|[\s.-])REBiRTH\b', 'Matches the "REBiRTH" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('SHADOW', '(?i)(?<=^|[\s.-])SHADOW\b', 'Matches the "SHADOW" release group');
+INSERT INTO regular_expressions (name, pattern, description) VALUES ('ZiGZaG', '(?i)(?<=^|[\s.-])ZiGZaG\b', 'Matches the "ZiGZaG" release group');
+
+WITH additional_french_group(name) AS (
+  VALUES
+    ('addicted2u'), ('AgoraQc'), ('AKS'), ('Anime-DL'), ('AnimesForAll'),
+    ('ANTHEM'), ('Blap'), ('CaptQC'), ('DELiRiUS'), ('EICHBAUM MUSIC'),
+    ('H4KIG'), ('HazzAnim'), ('KTH'), ('LPP'), ('MiniPousses'), ('MiTOU'),
+    ('NODA'), ('NYX'), ('RAPTOR'), ('REBiRTH'), ('SHADOW'), ('ZiGZaG')
+), group_tag(name) AS (
+  VALUES ('French'), ('Release Group')
+)
+INSERT INTO regular_expression_tags (regular_expression_name, tag_name)
+SELECT additional_french_group.name, group_tag.name
+FROM additional_french_group
+CROSS JOIN group_tag;
