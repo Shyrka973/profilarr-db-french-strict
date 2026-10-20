@@ -10,7 +10,7 @@
 -- Radarr seulement : l'impact sur Sonarr n'a pas ete mesure.
 
 INSERT INTO regular_expressions (name, pattern, description)
-VALUES ('Shirka - Release Group NoTag', '^no[\s._-]?tag$', 'Groupe de release litteralement NoTag (release sans equipe)');
+VALUES ('Shirka - Release Group NoTag', '(^|[\s._-])no[\s._-]?tag$', 'Groupe de release se terminant par NoTag (release sans equipe) ; Radarr lit "AC-3-NoTag" comme groupe "3-NoTag"');
 
 INSERT INTO regular_expressions (name, pattern, description)
 VALUES ('Shirka - Release Group (Any)', '.', 'Tout groupe de release ; nie, matche un groupe absent');
